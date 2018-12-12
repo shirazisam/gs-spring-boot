@@ -1,0 +1,27 @@
+spring:
+  ## jackson serialization properties
+  # these *only* have effect if you let Spring Boot handle the JacksonJsonMessageConverter creation,
+  # so don't set @EnableMvc yourself or extend WebMvcConfigurationSupport (use the adapter WebMvcConfigurerAdapter instead)
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      indent_output: true
+    deserialization:
+      fail_on_unknown_properties: true
+  http:
+    multipart:
+      max-file-size: 512KB
+      max-request-size: 512KB
+
+# actuator
+management:
+  security:
+    enabled: false
+
+# webserver
+server:
+  port: 8100
+  servlet:
+    context-path: /shiraz
+
+#logging.level.org.springframework=debug
