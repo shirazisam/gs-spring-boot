@@ -13,11 +13,6 @@ spring:
       max-file-size: 512KB
       max-request-size: 512KB
 
-# actuator
-management:
-  security:
-    enabled: false
-
 # webserver
 server:
   port: 8100
