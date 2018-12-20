@@ -19,4 +19,9 @@ server:
   servlet:
     context-path: /shiraz
 
+# folders
+shiraz:
+  home: myfolder
+  files: ${shiraz.home}/instances
+
 #logging.level.org.springframework=debug
