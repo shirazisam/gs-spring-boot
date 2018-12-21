@@ -1,12 +1,10 @@
-package hello;
+package rest;
 
 import model.MyFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import service.MyDesignInstanceService;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -36,4 +34,21 @@ public class HelloController {
     public Page<MyFile> getMyFiles(Pageable pageable) {
         return service.getMyFiles(pageable);
     }
+
+    @PostMapping(path = "/myfile")
+    public MyFile createNewDocumentDesign(@RequestBody MyFile entry) {
+        return service.createNewFileEntry(entry);
+    }
+
+    @GetMapping(path = "/myfile/{id}")
+    public MyFile getMyFile(@PathVariable("id") String fileId) {
+        return service.getMyFile(fileId);
+    }
+
+    @DeleteMapping(path = "/myfile/{id}")
+    public MyFile deleteMyFile(@PathVariable("id") String fileId) {
+        return service.deleteMyFile(fileId);
+    }
+
+
 }

@@ -15,9 +15,8 @@ spring:
 
 # webserver
 server:
-  port: 8100
-  servlet:
-    context-path: /shiraz
+  port: 8080
+  contextPath: /shiraz
 
 # folders
 shiraz:

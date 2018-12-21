@@ -1,4 +1,4 @@
-package hello;
+package rest;
 
 import config.MyApiConfig;
 import org.springframework.boot.SpringApplication;

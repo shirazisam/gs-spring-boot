@@ -111,7 +111,7 @@
                     <goal>repackage</goal>
                 </goals>
                 <configuration>
-                    <mainClass>hello.Application</mainClass>
+                    <mainClass>rest.Application</mainClass>
                     <layout>ZIP</layout>
                     <executable>true</executable>
                     <classifier>exec</classifier>
