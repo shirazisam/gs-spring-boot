@@ -1,12 +1,11 @@
 package service;
 
-import hello.MyPlaceHolder;
 import model.MyFile;
-import repository.MyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import repository.MyRepository;
 
 /**
  * Created by shiraz on 19/12/2018.
@@ -15,13 +14,9 @@ import java.util.List;
 public class MyDesignInstanceService {
 
     @Autowired
-    private MyRepository repository;
+    private MyRepository myRepository;
 
-    public MyPlaceHolder getNewPlaceholder(String name) {
-        return repository.getPlaceHolder(name);
-    }
-
-    public List<MyFile> getMyFiles() {
-        return repository.getMyFiles();
+    public Page<MyFile> getMyFiles(Pageable pageable) {
+        return myRepository.findAll(pageable);
     }
 }

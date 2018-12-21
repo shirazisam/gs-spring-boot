@@ -26,7 +26,7 @@ public class MyFileService {
     private Path myDirectory;
 
     @Autowired
-    private MyRepository repository;
+    private MyRepository myRepository;
 
     public MyFileService(@Value("${shiraz.files:shite/crap}") String myDirectory) throws IOException {
         this.myDirectory = Files.createDirectories(Paths.get(myDirectory));
@@ -34,7 +34,7 @@ public class MyFileService {
 
     @PostConstruct
     public void initDesignFiles() throws IOException {
-        listDesignFiles().forEach(repository::save);
+        listDesignFiles().forEach(myRepository::save);
         System.out.println("Post construct complete. " + myDirectory.toString());
     }
 
