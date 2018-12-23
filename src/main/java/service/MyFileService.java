@@ -33,7 +33,7 @@ public class MyFileService {
     }
 
     @PostConstruct
-    public void initDesignFiles() throws IOException {
+    private void initDesignFiles() throws IOException {
         listDesignFiles().forEach(myRepository::save);
         System.out.println("Post construct complete. " + myDirectory.toString());
     }
