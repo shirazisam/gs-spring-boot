@@ -1,4 +1,4 @@
-package model;
+package client;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.FileTime;
@@ -18,7 +17,7 @@ import java.util.Date;
 /**
  * Created by shiraz on 20/12/2018.
  */
-public class MyFile implements Serializable {
+public class MyFileClient {
 
     @Id
     private String id;
@@ -31,7 +30,7 @@ public class MyFile implements Serializable {
     FileTime lastModifiedTime;
 
     @JsonCreator
-    public MyFile(@JsonProperty("id") String id, @JsonProperty("size") String size, @JsonProperty("timestamp") String ts) throws ParseException {
+    public MyFileClient(@JsonProperty("id") String id, @JsonProperty("size") String size, @JsonProperty("timestamp") String ts) throws ParseException {
         this.id = id;
         this.size = Long.valueOf(size);
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -39,7 +38,7 @@ public class MyFile implements Serializable {
         lastModifiedTime = FileTime.fromMillis(date.getTime());
     }
 
-    public MyFile(String filename, Path path) {
+    public MyFileClient(String filename, Path path) {
         this.id = filename;
         this.path = path;
         try {
@@ -65,10 +64,11 @@ public class MyFile implements Serializable {
 
     @Override
     public String toString() {
-        return "MyFile{" +
+        return "MyFileClient{" +
                 "id='" + id + '\'' +
                 ", size=" + size +
-                ", lastModifiedTime=" + new Date(lastModifiedTime.toMillis()) +
+                ", path=" + path +
+                ", lastModifiedTime=" + lastModifiedTime +
                 '}';
     }
 }
