@@ -1,52 +1,55 @@
 package service;
 
+import exception.NotFoundException;
 import model.MyFile;
+import model.MyFileSummary;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import repository.MyRepository;
-import util.DocumentUtil;
 
-import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
- * Created by shiraz on 20/12/2018.
+ * Created by shiraz on 19/12/2018.
  */
-@Component
+@Service
 public class MyFileService {
-
-    private static final String EXT_PDF = ".pdf";
-    private Path myDirectory;
 
     @Autowired
     private MyRepository myRepository;
 
-    public MyFileService(@Value("${shiraz.files:shite/crap}") String myDirectory) throws IOException {
-        this.myDirectory = Files.createDirectories(Paths.get(myDirectory));
+    public Page<MyFile> getMyFiles(Pageable pageable) {
+        return myRepository.findAll(pageable);
     }
 
-    @PostConstruct
-    private void initDesignFiles() throws IOException {
-        listDesignFiles().forEach(myRepository::save);
-        System.out.println("Post construct complete. " + myDirectory.toString());
+    public List<MyFile> getMyFilesList(Pageable pageable) {
+        return getMyFiles(pageable).getContent();
     }
 
-    private List<MyFile> listDesignFiles() throws IOException {
-        Path dir = myDirectory;
-        return Files.list(dir)
-                .filter(f -> f.getFileName().toString().endsWith(EXT_PDF))
-                .map(ff -> {
-                    Optional<String> id = DocumentUtil.getFileNameWithoutExtension(ff.getFileName());
-                    return new MyFile(id.get(), ff);
-                })
-                .collect(Collectors.toList());
+    public MyFile createNewFileEntry(MyFile entry) {
+        return myRepository.save(entry);
     }
 
+    public MyFile deleteMyFile(String fileId) {
+        MyFile toDelete = myRepository.findOne(fileId);
+        if (toDelete == null) {
+            throw new NotFoundException();
+        }
+        myRepository.delete(toDelete);
+        return toDelete;
+    }
+
+    public MyFile getMyFile(String fileId) {
+        MyFile myFile = myRepository.findOne(fileId);
+        if (myFile == null) {
+            throw new NotFoundException(fileId + " not found.");
+        }
+        return myFile;
+    }
+
+    public MyFileSummary getMyfilesSummary(Pageable pageable) {
+        return new MyFileSummary(getMyFilesList(pageable));
+    }
 }

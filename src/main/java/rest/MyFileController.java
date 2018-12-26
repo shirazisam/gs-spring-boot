@@ -6,17 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-import service.MyDesignInstanceService;
+import service.MyFileService;
 
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-public class HelloController {
+public class MyFileController {
 
     @Autowired
-    private MyDesignInstanceService service;
+    private MyFileService service;
 
     @RequestMapping("/")
     public String indexxx() {
