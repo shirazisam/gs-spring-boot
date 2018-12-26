@@ -1,5 +1,7 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.LongSummaryStatistics;
@@ -8,6 +10,7 @@ import java.util.stream.Collectors;
 /**
  * Created by shiraz on 23/12/2018.
  */
+@JsonRootName("summary")
 public class MyFileSummary implements Serializable {
 
     private long largest;
