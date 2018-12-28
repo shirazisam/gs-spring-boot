@@ -3,6 +3,8 @@ package rest;
 import model.MyFile;
 import model.MyFileSummary;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -18,20 +20,13 @@ public class MyFileController {
     @Autowired
     private MyFileService service;
 
-    @RequestMapping("/")
-    public String indexxx() {
-        return "Greetings from Shiraz Boot!";
+    @Autowired
+    private DiscoveryClient discoveryClient;
+
+    @RequestMapping("/service-instances/{applicationName}")
+    public List<ServiceInstance> serviceInstancesByApplicationName(@PathVariable String applicationName) {
+        return discoveryClient.getInstances(applicationName);
     }
-
-
-//    @PostMapping(path = "/designinstance/{designinstanceid}/data/placeholder/{placeholderName}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-//    public MyPlaceHolder createDesignInstancePlaceholder(@PathVariable("designinstanceid") String designInstanceId,
-//                                                         @PathVariable("placeholderName") String placeholderName,
-//                                                         @RequestBody MyPlaceHolder placeholder) {
-//        System.out.println("designInstanceId = " + designInstanceId + placeholder);
-//
-//        return service.getNewPlaceholder(designInstanceId + placeholderName + placeholder.getName().toUpperCase());
-//    }
 
     @GetMapping(path = "/myfiles", produces = APPLICATION_JSON_VALUE)
     public Page<MyFile> getMyFiles(Pageable pageable) {
@@ -48,7 +43,7 @@ public class MyFileController {
         return service.createNewFileEntry(entry);
     }
 
-    @GetMapping(path = "/myfile/{id}")
+    @GetMapping(path = "/myfile/{id}", produces = APPLICATION_JSON_VALUE)
     public MyFile getMyFile(@PathVariable("id") String fileId) {
         return service.getMyFile(fileId);
     }

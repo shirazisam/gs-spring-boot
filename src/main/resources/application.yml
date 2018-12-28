@@ -12,11 +12,18 @@ spring:
     multipart:
       max-file-size: 512KB
       max-request-size: 512KB
+  application:
+    name: GS-SPRINT-BOOTIFUL
 
 # webserver
 server:
-  port: 8080
+  port: 8100
   contextPath: /shiraz
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
 
 # folders
 shiraz:
