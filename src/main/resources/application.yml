@@ -13,7 +13,7 @@ spring:
       max-file-size: 512KB
       max-request-size: 512KB
   application:
-    name: GS-SPRINT-BOOTIFUL
+    name: GS-SPRING-BOOTIFUL
 
 # webserver
 server:

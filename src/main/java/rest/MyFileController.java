@@ -13,6 +13,7 @@ import service.MyFileService;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.http.MediaType.APPLICATION_XML_VALUE;
 
 @RestController
 public class MyFileController {
@@ -23,7 +24,7 @@ public class MyFileController {
     @Autowired
     private DiscoveryClient discoveryClient;
 
-    @RequestMapping("/service-instances/{applicationName}")
+    @RequestMapping(value = "/service-instances/{applicationName}", produces = APPLICATION_XML_VALUE)
     public List<ServiceInstance> serviceInstancesByApplicationName(@PathVariable String applicationName) {
         return discoveryClient.getInstances(applicationName);
     }

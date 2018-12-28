@@ -1,6 +1,7 @@
 package rest;
 
 import config.MyApiConfig;
+import config.ShutdownConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,7 +15,7 @@ import org.springframework.data.map.repository.config.EnableMapRepositories;
 @SpringBootApplication
 @EnableAutoConfiguration
 @EnableMapRepositories("repository")
-@Import({MyApiConfig.class})
+@Import({MyApiConfig.class, ShutdownConfig.class})
 public class Application {
 
     public static void main(String[] args) {

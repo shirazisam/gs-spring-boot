@@ -8,6 +8,7 @@ import repository.MyRepository;
 import util.DocumentUtil;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -36,6 +37,11 @@ public class MyFileInitService {
     private void initDesignFiles() throws IOException {
         listDesignFiles().forEach(myRepository::save);
         System.out.println("Post construct complete. " + myDirectory.toString());
+    }
+
+    @PreDestroy
+    private void terminate() throws Exception {
+        System.out.println("The application has been terminated.");
     }
 
     private List<MyFile> listDesignFiles() throws IOException {
